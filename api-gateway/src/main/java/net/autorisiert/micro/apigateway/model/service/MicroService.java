@@ -1,4 +1,4 @@
-package net.autorisiert.micro.apigateway.model;
+package net.autorisiert.micro.apigateway.model.service;
 
 import java.util.List;
 

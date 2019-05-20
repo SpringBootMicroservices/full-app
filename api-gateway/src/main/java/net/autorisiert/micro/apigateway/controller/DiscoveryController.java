@@ -1,7 +1,7 @@
 package net.autorisiert.micro.apigateway.controller;
 
-import net.autorisiert.micro.apigateway.model.MicroService;
-import net.autorisiert.micro.apigateway.model.MicroServiceInstance;
+import net.autorisiert.micro.apigateway.model.service.MicroService;
+import net.autorisiert.micro.apigateway.model.service.MicroServiceInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
@@ -14,7 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/discovery")
 public class DiscoveryController {
+
     private final DiscoveryClient discoveryClient;
+
 
     @Autowired
     public DiscoveryController(DiscoveryClient discoveryClient) {
@@ -29,6 +31,9 @@ public class DiscoveryController {
             service.setName(s);
             List<MicroServiceInstance> list = new ArrayList<>();
             service.setInstances(list);
+            //discoveryClient.getServices().get(0).
+            // discoveryClient.getInstances(s).get(0).
+
             discoveryClient.getInstances(s).stream()
                     .map(inst -> (EurekaDiscoveryClient.EurekaServiceInstance) inst)
                     .forEach(inst -> {

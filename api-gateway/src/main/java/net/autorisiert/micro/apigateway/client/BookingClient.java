@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @FeignClient(name = "booking-service")
 public interface BookingClient {
+
     @RequestMapping("/booking/{id}")
     String DoBooking(@PathVariable("id") String eventId);
 }

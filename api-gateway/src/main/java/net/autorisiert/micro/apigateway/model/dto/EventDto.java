@@ -1,4 +1,4 @@
-package net.autorisiert.micro.apigateway.model;
+package net.autorisiert.micro.apigateway.model.dto;
 
 public class EventDto {
     private int id;

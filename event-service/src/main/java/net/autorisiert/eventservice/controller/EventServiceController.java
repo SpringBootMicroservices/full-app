@@ -1,15 +1,18 @@
 package net.autorisiert.eventservice.controller;
 
+import net.autorisiert.eventservice.helper.EntityExtensions;
 import net.autorisiert.eventservice.model.Event;
+import net.autorisiert.eventservice.model.EventDto;
 import net.autorisiert.eventservice.repository.EventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.jta.JtaTransactionManager;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,5 +34,19 @@ public class EventServiceController {
         event.setTicketsBooked(event.getTicketsBooked() + 1);
         eventRepository.save(event);
         return UUID.randomUUID().toString();
+    }
+
+    @RequestMapping(value = "/{id}", produces = {"application/xml", "application/json"})
+    @ResponseBody
+    public EventDto FindByid(@PathVariable String id){
+        Event ev = eventRepository.findOne(id);
+        EventDto dto = EntityExtensions.ToDto(ev);
+        return dto;
+    }
+
+    @PostMapping("save")
+    public EventDto SaveDto(@RequestBody EventDto dto, BindingResult result){
+        List<ObjectError> allErrors = result.getAllErrors();
+        return dto;
     }
 }
